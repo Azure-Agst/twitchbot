@@ -56,7 +56,6 @@ def ws_event_loop():
                     # We got a message! Weeeee!
                     # Get user Stream
                     stream = get_stream(user['id'])
-                    print(stream['thumbnail_url'].replace("{width}x{height}", "853x480"))
 
                     # Send webhook
                     webhook.send_rich(DiscordMessage(

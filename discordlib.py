@@ -16,6 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import logging
 import requests
 from enum import Enum
 from typing import List
@@ -214,7 +215,7 @@ class DiscordWebhook():
         """Rich Discord Message Function"""
 
         if message.content == "":
-            print("Cannot send empty webhook!")
+            logging.error("Cannot send empty webhook!")
             return
 
         json = message.to_dict()
@@ -262,5 +263,5 @@ class DiscordWebhook():
 
 # Disclaimer for accidental invocations
 if __name__ == "__main__":
-    print("This file is intended to be a library, not executed.")
+    logging.error("This file is intended to be a library, not executed.")
     exit(0)

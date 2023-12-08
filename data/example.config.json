@@ -1,0 +1,10 @@
+{
+    "hostname": "http://localhost:8080",
+    "discord": {
+        "webhook": "https://discord.com/api/webhooks/..."
+    },
+    "twitch": {
+        "clientid": "...",
+        "secret": "..."
+    }
+}

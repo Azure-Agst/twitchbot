@@ -161,5 +161,4 @@ cython_debug/
 
 # Custom config
 config.json
-data/**
-!data/example.config.json
+data/

@@ -35,7 +35,7 @@ class Config:
         """
 
         # First, try environment variables
-        env_var = self.CONFIG_PREFIX + key.upper().replace(".", "_")
+        env_var = self.CONFIG_PREFIX + key.upper().replace(".", "__")
         env_value = os.environ.get(env_var)
         if env_value is not None:
             return env_value
