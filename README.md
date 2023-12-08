@@ -1,6 +1,4 @@
-<img src="./assets/twitch.svg" height=160>
-&nbsp;&nbsp;
-<img src="./assets/discord.svg" height=140>
+<img src="./assets/twitch.svg" height=160>&nbsp;&nbsp;<img src="./assets/discord.svg" height=140>
 
 # Twitch Discord Bridge
 
