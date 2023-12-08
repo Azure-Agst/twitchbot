@@ -25,7 +25,11 @@ def ws_event_loop():
     # Init Webhook
     logging.info("Initializing Discord Webhook...")
     config = get_config()
-    webhook = DiscordWebhook(config.d_webhook)
+    webhook = DiscordWebhook(
+        config.d_webhook,
+        name="Twitch Notifier",
+        pfp_url="https://static-cdn.jtvnw.net/jtv_user_pictures/8a6381c7-d0c0-4576-b179-38bd5ce1d6af-profile_image-300x300.png"
+    )
 
     # Create connection
     logging.info("Starting Websocket Loop...")
