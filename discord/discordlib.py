@@ -214,7 +214,7 @@ class DiscordWebhook():
     def send_rich(self, message: DiscordMessage):
         """Rich Discord Message Function"""
 
-        if message.content == "":
+        if message.content == "" and len(message.embeds) == 0:
             logging.error("Cannot send empty webhook!")
             return
 

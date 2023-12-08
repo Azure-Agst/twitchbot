@@ -8,6 +8,7 @@ from utils.db import clear_token
 from twitch.oauth import request_token
 from twitch.websocket import ws_event_loop, stop_ws_event_loop
 from twitch.rest import format_auth_url, get_cur_user
+from discord.webhooks import send_status_notif
 
 routes = Blueprint(
     "main", __name__,
@@ -39,6 +40,7 @@ def oauth_callback():
         return "Server-side error. Check Logs.", 500
 
     logging.info("User has logged in!")
+    send_status_notif("User has logged in! Starting WebSocket...")
     queue.push(ws_event_loop)
 
     return redirect("/")

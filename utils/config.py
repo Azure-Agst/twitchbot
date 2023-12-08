@@ -24,6 +24,7 @@ class Config:
         # NOTE: If reusing this in future projects, only edit this section here!
         self.hostname = self.get_value(confdata, "hostname", "http://localhost:8080")
         self.d_webhook = self.get_value(confdata, "discord.webhook", "", mandatory=True)
+        self.d_status_hook = self.get_value(confdata, "discord.status", self.d_webhook)
         self.t_clientid = self.get_value(confdata, "twitch.clientid", "", mandatory=True)
         self.t_secret = self.get_value(confdata, "twitch.secret", "", mandatory=True)
 

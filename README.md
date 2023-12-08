@@ -26,6 +26,7 @@ docker run -dp 8080:8080 \
     -v twitch_persist:/usr/src/app/data \
     -e CONFIG__HOSTNAME=http://localhost:8080 \
     -e CONFIG__DISCORD_WEBHOOK=https://discord.com/... \
+    -e CONFIG__DISCORD_STATUS=https://discord.com/...
     -e CONFIG__TWITCH__CLIENTID=1234567890 \
     -e CONFIG__TWITCH__SECRET=abcdefgh \
     ghcr.io/azure-agst/twitchbot

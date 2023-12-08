@@ -4,8 +4,9 @@ import threading
 from websockets.sync import client
 from websockets.exceptions import ConnectionClosedError
 
-from discordlib import DiscordWebhook, DiscordMessage, DiscordEmbed
 from utils.config import get_config
+from discord.webhooks import generate_webhook
+from discord.discordlib import DiscordMessage, DiscordEmbed
 from .rest import get_cur_user, sub_to_event, get_stream
 from .constants import TWITCH_WS
 
@@ -25,11 +26,7 @@ def ws_event_loop():
     # Init Webhook
     logging.info("Initializing Discord Webhook...")
     config = get_config()
-    webhook = DiscordWebhook(
-        config.d_webhook,
-        name="Twitch Notifier",
-        pfp_url="https://static-cdn.jtvnw.net/jtv_user_pictures/8a6381c7-d0c0-4576-b179-38bd5ce1d6af-profile_image-300x300.png"
-    )
+    webhook = generate_webhook(config.d_webhook)
 
     # Create connection
     logging.info("Starting Websocket Loop...")
