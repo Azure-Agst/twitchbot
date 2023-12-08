@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Twitch Discord Bridge</title>
+    </head>
+    <body>
+        <h1>Twitch Discord Bridge</h1>
+        <p>
+            In order for us to get events from Twitch, we need to use the EventSub service they have over WebSockets.
+            In order to register a subscription to an events, we need a user token from Twitch. Thus, all of this extra
+            work to design a web ui and a worker thread. This is way too overengineered. This sucks.
+        </p>
+        <hr>
+        
+        {% if user %}
+            <span>
+                Logged in as:
+                <img src="{{ user.profile_image_url }}" 
+                    width="25px" display="inline"/>
+                {{ user.display_name }}
+            </span>
+        {% else %}
+            <a href="{{ auth_url }}">
+                <button>Login w/ Twitch</button>
+            </a>
+        {% endif %}
+        <hr>
+        <footer>(c) 2023 Andrew "Azure-Agst" Augustine</footer>
+    </body>
+</html>
