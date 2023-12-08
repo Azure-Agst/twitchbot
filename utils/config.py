@@ -8,7 +8,7 @@ class Config:
     Class to represent main app config
     """
 
-    CONFIG_PREFIX = "CONFIG_"
+    CONFIG_PREFIX = "CONFIG__"
 
     def __init__(self, config_path: str = "config.json"):
         """Constructor"""
@@ -22,12 +22,18 @@ class Config:
 
         # Load values
         # NOTE: If reusing this in future projects, only edit this section here!
-        self.hostname = self.get_value(confdata, "hostname", "http://localhost:5000")
-        self.d_webhook = self.get_value(confdata, "discord.webhook", "")
-        self.t_clientid = self.get_value(confdata, "twitch.clientid", "")
-        self.t_secret = self.get_value(confdata, "twitch.secret", "")
+        self.hostname = self.get_value(confdata, "hostname", "http://localhost:8080")
+        self.d_webhook = self.get_value(confdata, "discord.webhook", "", mandatory=True)
+        self.t_clientid = self.get_value(confdata, "twitch.clientid", "", mandatory=True)
+        self.t_secret = self.get_value(confdata, "twitch.secret", "", mandatory=True)
 
-    def get_value(self, file: dict, key: str, default: str):
+    def get_value(
+            self,
+            file: dict,
+            key: str,
+            default: str,
+            mandatory: bool = False
+            ):
         """
         Main function for parsing config key values
         - Accepts string of format "value" or "object.value"
@@ -49,6 +55,10 @@ class Config:
                 return data
         except KeyError:
             pass
+
+        # If mandatory and not found yet, error
+        if mandatory:
+            raise Exception(f"Unset config value '{key}' is mandatory!")
 
         # Lastly, return default
         return default

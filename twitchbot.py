@@ -36,9 +36,10 @@ def main():
     # Validate Twitch Token
     status = validate_token()
     if status is not None:
+        logging.info("Found valid cached token! Using...")
         queue.push(ws_event_loop)
     else:
-        logging.warn("Cached token didn't pass validation! Must re-auth!")
+        logging.warn("No cached token found or token didn't pass validation! Must re-auth!")
 
     # Configure webapp
     web = Flask(__name__)

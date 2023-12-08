@@ -13,6 +13,32 @@ You'll need a registered Twitch application and a webhook.
 3. Fill in your config file
 4. Profit?
 
+## Running
+
+This app can either be run using docker (preferred method) or by cloning and using `waitress-serve`.
+
+### Docker
+
+Below is an example command you can use to start up the Docker image
+
+```bash
+docker run -dp 8080:8080 \
+    -v twitch_persist:/usr/src/app/data \
+    -e CONFIG__HOSTNAME=http://localhost:8080 \
+    -e CONFIG__DISCORD_WEBHOOK=https://discord.com/... \
+    -e CONFIG__TWITCH__CLIENTID=1234567890 \
+    -e CONFIG__TWITCH__SECRET=abcdefgh \
+    ghcr.io/azure-agst/twitchbot
+```
+
+### Local Install
+
+Make sure you have a version of Python greater than or equal to 3.10. Clone the repo. Install requirements. Serve using the following command:
+
+```bash
+waitress-serve --call 'twitchbot:main'
+```
+
 ## Config
 
 The configuration for this is stored in `data/config.json`. There is an included example.

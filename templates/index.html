@@ -19,6 +19,9 @@
                     width="25px" display="inline"/>
                 {{ user.display_name }}
             </span>
+            <a href="{{ url_for('main.logout') }}">
+                <button>Logout</button>
+            </a>
         {% else %}
             <a href="{{ auth_url }}">
                 <button>Login w/ Twitch</button>

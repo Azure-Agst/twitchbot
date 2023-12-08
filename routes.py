@@ -1,10 +1,12 @@
 import os
+import logging
 from flask import Blueprint, request, render_template, \
     redirect, abort, url_for
 
 from utils.threads import queue
+from utils.db import clear_token
 from twitch.oauth import request_token
-from twitch.websocket import ws_event_loop
+from twitch.websocket import ws_event_loop, stop_ws_event_loop
 from twitch.rest import format_auth_url, get_cur_user
 
 routes = Blueprint(
@@ -36,7 +38,23 @@ def oauth_callback():
     if res is None:
         return "Server-side error. Check Logs.", 500
 
+    logging.info("User has logged in!")
     queue.push(ws_event_loop)
+
+    return redirect("/")
+
+
+@routes.route("/logout")
+def logout():
+    """Stop the bot!"""
+
+    if get_cur_user() is None:
+        return "Already logged out.", 400
+
+    clear_token()
+    stop_ws_event_loop()
+
+    logging.info("User has logged out!")
 
     return redirect("/")
 

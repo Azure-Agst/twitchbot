@@ -14,7 +14,7 @@ ENV DOCKER_ENV=True
 
 # Set Labels
 LABEL org.opencontainers.image.authors="me@azureagst.dev"
-LABEL org.opencontainers.image.source="https://github.com/azure-agst/classbot-3.0"
+LABEL org.opencontainers.image.source="https://github.com/Azure-Agst/twitchbot"
 
 # Set entrypoint
-CMD [ "waitress-serve", "--call", "'twitchbot:main'" ]
+CMD [ "waitress-serve", "--call", "twitchbot:main" ]

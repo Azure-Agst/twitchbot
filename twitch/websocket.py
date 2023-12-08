@@ -1,5 +1,6 @@
 import json
 import logging
+import threading
 from websockets.sync import client
 from websockets.exceptions import ConnectionClosedError
 
@@ -8,12 +9,18 @@ from utils.config import get_config
 from .rest import get_cur_user, sub_to_event, get_stream
 from .constants import TWITCH_WS
 
+STOP_EVTLOOP_EVENT = threading.Event()
+
 
 def ws_event_loop():
     """
     Main Socket Connect Functions
     Returns Session ID
     """
+
+    # Import event & reset
+    global STOP_EVTLOOP_EVENT
+    STOP_EVTLOOP_EVENT.clear()
 
     # Init Webhook
     logging.info("Initializing Discord Webhook...")
@@ -46,8 +53,16 @@ def ws_event_loop():
             )
 
             # Start Listening
-            while True:
-                message = json.loads(ws.recv())
+            while not STOP_EVTLOOP_EVENT.is_set():
+
+                # Get message on timeout
+                try:
+                    raw = ws.recv(5.0)
+                except TimeoutError:
+                    continue
+
+                # Parse JSON
+                message = json.loads(raw)
 
                 # if a stream online message...
                 if message['metadata']['message_type'] == "notification" and \
@@ -72,6 +87,17 @@ def ws_event_loop():
                         ]
                     ))
 
+            logging.info("Finished ws_event_loop!")
+
     except ConnectionClosedError as e:
         logging.error("The WebSocket connection was closed!")
         logging.error(e)
+
+
+def stop_ws_event_loop():
+    """
+    Tells the websocket to stop looping
+    Usually because a user logged out
+    """
+    global STOP_EVTLOOP_EVENT
+    STOP_EVTLOOP_EVENT.set()

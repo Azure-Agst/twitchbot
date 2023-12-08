@@ -105,7 +105,6 @@ def validate_token():
     res = requests.get(f'{TWITCH_AUTH}/validate', headers={
         "Authorization": f"Bearer {token['access']}",
     })
-    logging.info(res.json())
 
     # If unauthorized, refresh token
     if res.status_code == 401:
